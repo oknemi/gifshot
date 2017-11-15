@@ -300,13 +300,13 @@ var utils$2 = Object.freeze({
 */
 
 // Dependencies
-var error = {
+var error$1 = {
     validate: function validate(skipObj) {
         skipObj = utils.isObject(skipObj) ? skipObj : {};
 
         var errorObj = {};
 
-        utils.each(error.validators, function (indece, currentValidator) {
+        utils.each(error$1.validators, function (indece, currentValidator) {
             var errorCode = currentValidator.errorCode;
 
             if (!skipObj[errorCode] && !currentValidator.condition) {
@@ -322,7 +322,7 @@ var error = {
         return errorObj;
     },
     isValid: function isValid(skipObj) {
-        var errorObj = error.validate(skipObj);
+        var errorObj = error$1.validate(skipObj);
         var isValid = errorObj.error !== true ? true : false;
 
         return isValid;
@@ -366,8 +366,8 @@ var error = {
 
 
 
-var error$2 = Object.freeze({
-	default: error
+var error$3 = Object.freeze({
+	default: error$1
 });
 
 /*
@@ -431,7 +431,7 @@ var defaultOptions$2 = Object.freeze({
 
 // Dependencies
 function isSupported() {
-  return error.isValid();
+  return error$1.isValid();
 }
 
 /*
@@ -444,7 +444,7 @@ function isSupported() {
 */
 
 function isWebCamGIFSupported() {
-  return error.isValid();
+  return error$1.isValid();
 }
 
 /*
@@ -462,7 +462,7 @@ function isSupported$1() {
         getUserMedia: true
     };
 
-    return error.isValid(options);
+    return error$1.isValid(options);
 }
 
 /*
@@ -494,7 +494,7 @@ function isExistingVideoGIFSupported(codecs) {
         }
     }
 
-    return error.isValid({
+    return error$1.isValid({
         'getUserMedia': true
     });
 }
@@ -1933,7 +1933,7 @@ function existingImages() {
         'getUserMedia': true,
         'window.URL': true
     };
-    var errorObj = error.validate(skipObj);
+    var errorObj = error$1.validate(skipObj);
     var loadedImages = [];
     var loadedImagesLength = 0;
     var tempImage = void 0;
@@ -2320,7 +2320,11 @@ var videoStream = {
         } else if (videoElement.mozSrcObject) {
             videoElement.mozSrcObject = cameraStream;
         } else if (utils.URL) {
-            videoElement.src = utils.URL.createObjectURL(cameraStream);
+            try {
+                videoElement.srcObject = cameraStream;
+            } catch (error) {
+                videoElement.src = utils.URL.createObjectURL(cameraStream);
+            }
         }
 
         videoElement.play();
@@ -2597,7 +2601,7 @@ function existingVideo() {
         getUserMedia: true,
         'window.URL': true
     };
-    var errorObj = error.validate(skipObj);
+    var errorObj = error$1.validate(skipObj);
     var loadedImages = 0;
     var videoType = void 0;
     var videoSrc = void 0;
@@ -2613,7 +2617,7 @@ function existingVideo() {
         videoType = utils.getExtension(videoSrc);
 
         if (!utils.isSupported.videoCodecs[videoType]) {
-            return callback(error.messages.videoCodecs);
+            return callback(error$1.messages.videoCodecs);
         }
     } else if (utils.isArray(existingVideo)) {
         utils.each(existingVideo, function (iterator, videoSrc) {
@@ -2662,7 +2666,7 @@ function existingWebcam() {
 
 
     if (!isWebCamGIFSupported()) {
-        return callback(error.validate());
+        return callback(error$1.validate());
     }
 
     if (options.savedRenderingContexts.length) {
@@ -2783,7 +2787,7 @@ function takeSnapShot(userOptions, callback) {
 // Dependencies
 var API = {
   'utils': utils$2,
-  'error': error$2,
+  'error': error$3,
   'defaultOptions': defaultOptions$2,
   'createGIF': createGIF,
   'takeSnapShot': takeSnapShot,
