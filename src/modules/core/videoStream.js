@@ -92,7 +92,11 @@ const videoStream = {
         } else if (videoElement.mozSrcObject) {
             videoElement.mozSrcObject = cameraStream;
         } else if (utils.URL) {
-            videoElement.src = utils.URL.createObjectURL(cameraStream);
+            try {
+                videoElement.srcObject = cameraStream;
+            } catch (error) {
+                videoElement.src = utils.URL.createObjectURL(cameraStream);
+            }
         }
 
         videoElement.play();

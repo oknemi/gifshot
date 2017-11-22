@@ -27,7 +27,7 @@ gifshot uses the following technologies:
 
  - **Animated GIF from Webcam** :
 
- * Firefox 17+, Chrome 21+, Opera 18+, Blackberry Browser 10+, Opera Mobile 12+, Chrome For Android 35+, Firefox for Android 29+
+ * Firefox 17+, Chrome 21+, Opera 18+, Safari 11+, Blackberry Browser 10+, Opera Mobile 12+, Chrome For Android 35+, Firefox for Android 29+
 
  - **Animated GIF from Existing Video** :
 
